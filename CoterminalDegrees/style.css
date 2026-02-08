@@ -1,0 +1,88 @@
+/*********** Base styles **********/
+* {
+  box-sizing: border-box;
+  font-family: Comic Sans MS;
+}
+
+:root {
+		--terminal-rotation: 90;
+}
+
+
+div.lock {
+	position: relative;
+	background-color: #d3d3d3;
+	width: 300px;
+	height: 300px;
+	border-radius: 50%;
+	border: 10px solid blue;
+}	
+
+span.locknumbers {
+		margin: 0;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+	background-color: white;
+	font-size: 18px;
+	color: blue;
+	text-align: center;
+}
+
+div#initialside {
+	--initial-rotation: 90;
+	position: absolute;
+	bottom: 50%;
+	left: 50%;
+	border: 1px solid black;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	transform-origin: bottom;
+	transform: translate(-50%) rotate(calc(var(--initial-rotation) * 1deg));
+	width: 3 px;
+	height: 40%;
+	background-color: black;
+}
+
+div#terminalside {
+	/*--terminal-rotation: -45;*/
+	position: absolute;
+	bottom: 50%;
+	left: 50%;
+	border: 1px solid black;
+	border-top-left-radius: 10px;
+	border-top-right-radius: 10px;
+	transform-origin: bottom;
+	transform: translate(-50%) rotate(calc(var(--terminal-rotation) * 1deg));
+	width: 3 px;
+	height: 40%;
+	background-color: black;
+}
+
+.lock .degree {
+	--rotation: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+/*		background-color: yellow;*/
+	transform: rotate(var(--rotation));
+}
+
+.lock .d0 { --rotation: 90deg; }
+.lock .d90 { --rotation: 0deg; }
+.lock .d180 { --rotation: 270deg; }
+.lock .d270 { --rotation: 180deg; }
+
+.buttons {
+	padding: 15px;
+}
+
+.scoreboard {
+	padding: 8px;
+}
+
+.answerArea {
+	margin-top: 10px;
+}

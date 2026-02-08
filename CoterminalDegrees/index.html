@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="style.css" />
+	<script src="script.js"></script>
+	<title>Coterminal Angles in Degrees</title>
+</head>
+<body>
+<h1>Finding Coterminal Angles</h1>
+
+<div class="buttons">
+	<button id="reset" onclick= "document.getElementById('guess1').value = ''">
+      Reset Score
+ 	</button>
+
+	<button id="newproblem" onclick= "document.getElementById('guess1').value = ''">
+      New Problem
+ 	</button>
+
+	
+</div>
+
+<div class="scoreboard">
+	Score: <span id="score"></span> / <span id="total"></span>
+</div>
+
+
+<div class="lock">
+	<div id="initialside"></div>
+	<div id="terminalside"></div>
+	<div class="degree d0">0°</div>
+	<div class="degree d90">90°</div>
+	<div class="degree d180">180°</div>
+	<div class="degree d270">270°</div>
+	<span id="locknumber1" class="locknumbers">380</span>
+</div>
+
+  <p>
+    Input the positive coterminal angle less than 360°:
+    <input id="guess1" type="number">
+
+    <button id="coterminal1">
+      Check
+    </button>
+
+  </p>
+
+<div id="results"></div>
+
+<div class="answerArea">
+	<button id="answer">
+	See Answer
+	</button>
+</div>
+
+<h4>By: Carmen Wright</h2>
+
+</body>
+</html>

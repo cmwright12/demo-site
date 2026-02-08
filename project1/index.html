@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>First Page Demo</title>
 </head>
 <body>
-  Math stuff  
+  <div class="panel">
+    <label for="showExplanation">Show detailed explanations</label>
+    <input type="checkbox" id="showExplanation">
+    <input type="text" id="value1">
+    <button type="submit" form="quiz">Submit</button>
+    <button>New</button>
+    <div id="score"></div>
+  </div>
+  <div><p>Math text  \(2x+1=5\).</p>
+  <br><p>\[ a^2+b^2=c^2 \]</p>
+  </div>
 </body>
 </html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>n = a·x + b·y Visualizer</title>
+    <style>
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f6f8fa;
+            padding: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        h1 {
+            color: #444;
+            margin-bottom: 0.5em;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1em;
+            margin-bottom: 1.5em;
+        }
+
+        .control-group {
+            background: #fff;
+            border-radius: 10px;
+            padding: 10px 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .control-group label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.3em;
+        }
+
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 1em;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .stepper {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .stepper button {
+            background: #4f8ef7;
+            border: none;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .stepper button:hover {
+            background: #3c74cf;
+        }
+
+        .toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            cursor: pointer;
+        }
+
+        .visual-container {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .block-bar {
+            display: flex;
+            height: 50px;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .block {
+            height: 100%;
+            min-width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+            font-size: 0.9em;
+        }
+
+        .label {
+            margin-top: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Visualizing n = a·x + b·y</h1>
+
+    <div class="controls">
+
+        <div class="control-group">
+            <label for="a">a</label>
+            <input type="number" id="a" value="3" step="1">
+        </div>
+
+        <div class="control-group">
+            <label for="b">b</label>
+            <input type="number" id="b" value="5" step="1">
+        </div>
+
+        <div class="control-group">
+            <label>x</label>
+            <div class="stepper">
+                <button id="x-minus">−</button>
+                <input type="number" id="x" value="0" step="1">
+                <button id="x-plus">+</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>y</label>
+            <div class="stepper">
+                <button id="y-minus">−</button>
+                <input type="number" id="y" value="0" step="1">
+                <button id="y-plus">+</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label>Mode</label>
+            <div class="toggle">
+                <input type="checkbox" id="nonneg-only">
+                <span>Nonnegative Only</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="visual-container">
+        <div id="block-bar" class="block-bar"></div>
+        <div id="label" class="label">n = 0</div>
+    </div>
+
+    <script>
+        const aInput = document.getElementById('a');
+        const bInput = document.getElementById('b');
+        const xInput = document.getElementById('x');
+        const yInput = document.getElementById('y');
+        const xMinus = document.getElementById('x-minus');
+        const xPlus = document.getElementById('x-plus');
+        const yMinus = document.getElementById('y-minus');
+        const yPlus = document.getElementById('y-plus');
+        const nonnegToggle = document.getElementById('nonneg-only');
+        const blockBar = document.getElementById('block-bar');
+        const label = document.getElementById('label');
+
+        function createBlock(size, color, text) {
+            const block = document.createElement('div');
+            block.classList.add('block');
+            block.style.background = color;
+            block.style.width = Math.max(20, size * 20) + 'px'; // scale factor
+            block.textContent = text;
+            return block;
+        }
+
+        function updateVisual() {
+            let a = parseInt(aInput.value) || 0;
+            let b = parseInt(bInput.value) || 0;
+            let x = parseInt(xInput.value) || 0;
+            let y = parseInt(yInput.value) || 0;
+
+            let n = a * x + b * y;
+
+            blockBar.innerHTML = '';
+
+            if (x !== 0) {
+                const color = x > 0 ? '#4f8ef7' : '#f76b4f';
+                for (let i = 0; i < Math.abs(x); i++) {
+                    blockBar.appendChild(createBlock(a, color, `${a}`));
+                }
+            }
+
+            if (y !== 0) {
+                const color = y > 0 ? '#4caf50' : '#fbb167';
+                for (let i = 0; i < Math.abs(y); i++) {
+                    blockBar.appendChild(createBlock(b, color, `${b}`));
+                }
+            }
+
+            label.textContent = `n = ${n}`;
+        }
+
+        function adjustValue(input, delta) {
+            let val = parseInt(input.value) || 0;
+            if (nonnegToggle.checked) {
+                val = Math.max(0, val + delta);
+            } else {
+                val += delta;
+            }
+            input.value = val;
+            updateVisual();
+        }
+
+        [aInput, bInput, xInput, yInput, nonnegToggle]
+            .forEach(el => el.addEventListener('input', updateVisual));
+
+        xMinus.addEventListener('click', () => adjustValue(xInput, -1));
+        xPlus.addEventListener('click', () => adjustValue(xInput, 1));
+        yMinus.addEventListener('click', () => adjustValue(yInput, -1));
+        yPlus.addEventListener('click', () => adjustValue(yInput, 1));
+
+        updateVisual();
+    </script>
+
+</body>
+
+</html>

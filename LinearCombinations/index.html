@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>n = a*x + b*y Visualizer</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+
+        .controls div {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .axis-container {
+            position: relative;
+            margin-top: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            padding: 20px 0;
+            overflow-x: auto;
+        }
+
+        .axis {
+            display: flex;
+            position: relative;
+            height: 60px;
+            align-items: center;
+        }
+
+        .marker {
+            position: relative;
+            width: 40px;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .zero-line {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: black;
+            z-index: 2;
+        }
+
+        .blocks {
+            position: absolute;
+            top: 20px;
+            display: flex;
+            align-items: center;
+            height: 30px;
+        }
+
+        .block {
+            height: 30px;
+            border: 2px solid white;
+            box-sizing: border-box;
+        }
+
+        .block.a {
+            background: #4aa3df;
+        }
+
+        .block.b {
+            background: #58b368;
+        }
+
+        .block.a.neg {
+            background: repeating-linear-gradient(45deg,
+                    #4aa3df,
+                    #4aa3df 5px,
+                    white 5px,
+                    white 10px);
+        }
+
+        .block.b.neg {
+            background: repeating-linear-gradient(45deg,
+                    #58b368,
+                    #58b368 5px,
+                    white 5px,
+                    white 10px);
+        }
+
+        .n-label {
+            position: absolute;
+            top: 0;
+            font-weight: bold;
+            background: yellow;
+            padding: 2px 5px;
+            border-radius: 4px;
+            transform: translateX(-50%);
+        }
+
+        .recorded {
+            margin-top: 20px;
+            background: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .recorded-item {
+            display: flex;
+            justify-content: space-between;
+            background: #eef;
+            padding: 5px;
+            margin-top: 5px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>n = a*x + b*y Visualizer</h1>
+
+    <div class="controls">
+        <div>
+            <label>a:</label>
+            <input type="number" id="aInput" value="3">
+        </div>
+        <div>
+            <label>b:</label>
+            <input type="number" id="bInput" value="5">
+        </div>
+        <div>
+            <label>x:</label>
+            <button onclick="changeValue('x', -1)">−</button>
+            <input type="number" id="xInput" value="0">
+            <button onclick="changeValue('x', 1)">+</button>
+        </div>
+        <div>
+            <label>y:</label>
+            <button onclick="changeValue('y', -1)">−</button>
+            <input type="number" id="yInput" value="0">
+            <button onclick="changeValue('y', 1)">+</button>
+        </div>
+        <div>
+            <label>Mode:</label>
+            <select id="modeSelect" onchange="render()">
+                <option value="nonneg">Nonnegative Only</option>
+                <option value="all">All Integers</option>
+            </select>
+        </div>
+        <div>
+            <button onclick="recordValues()">Record</button>
+        </div>
+    </div>
+
+    <div class="axis-container">
+        <div class="axis" id="axis"></div>
+        <div class="blocks" id="blocks"></div>
+    </div>
+
+    <div class="recorded">
+        <h3>Recorded Values</h3>
+        <div id="recordedList"></div>
+    </div>
+
+    <script>
+        const unitWidth = 40; // pixels per integer unit
+        let recordedValues = [];
+
+        function changeValue(varName, delta) {
+            const input = document.getElementById(varName + 'Input');
+            let val = parseInt(input.value, 10) + delta;
+            const mode = document.getElementById('modeSelect').value;
+            if (mode === 'nonneg' && val < 0) val = 0;
+            input.value = val;
+            render();
+        }
+
+        function recordValues() {
+            const a = parseInt(aInput.value);
+            const b = parseInt(bInput.value);
+            const x = parseInt(xInput.value);
+            const y = parseInt(yInput.value);
+            const n = a * x + b * y;
+            recordedValues.push({ a, b, x, y, n });
+            updateRecordedList();
+        }
+
+        function useRecorded(index) {
+            const rec = recordedValues[index];
+            aInput.value = rec.a;
+            bInput.value = rec.b;
+            xInput.value = rec.x;
+            yInput.value = rec.y;
+            render();
+        }
+
+        function updateRecordedList() {
+            const list = document.getElementById('recordedList');
+            list.innerHTML = '';
+            recordedValues.forEach((rec, i) => {
+                const item = document.createElement('div');
+                item.className = 'recorded-item';
+                item.innerHTML = `n=${rec.n}, a=${rec.a}, x=${rec.x}, b=${rec.b}, y=${rec.y}
+      <button onclick="useRecorded(${i})">Use</button>`;
+                list.appendChild(item);
+            });
+        }
+
+        function render() {
+            const a = parseInt(aInput.value);
+            const b = parseInt(bInput.value);
+            const x = parseInt(xInput.value);
+            const y = parseInt(yInput.value);
+            const mode = document.getElementById('modeSelect').value;
+
+            const axisEl = document.getElementById('axis');
+            const blocksEl = document.getElementById('blocks');
+            axisEl.innerHTML = '';
+            blocksEl.innerHTML = '';
+
+            const n = a * x + b * y;
+
+            // Determine axis range
+            let minVal, maxVal;
+            if (mode === 'nonneg') {
+                minVal = 0;
+                maxVal = Math.max(n, 0) + Math.abs(a * x) + Math.abs(b * y) + 2;
+            } else {
+                const spread = Math.abs(a * x) + Math.abs(b * y) + 2;
+                minVal = -spread;
+                maxVal = spread;
+            }
+
+            // Build axis markers
+            for (let i = minVal; i <= maxVal; i++) {
+                const m = document.createElement('div');
+                m.className = 'marker';
+                m.textContent = i;
+                axisEl.appendChild(m);
+            }
+
+            // Zero line
+            const zeroLine = document.createElement('div');
+            zeroLine.className = 'zero-line';
+            const zeroIndex = -minVal;
+            zeroLine.style.left = (zeroIndex * unitWidth) + 'px';
+            axisEl.appendChild(zeroLine);
+
+            // Blocks
+            let currentPos = 0; // start at 0
+
+            function addBlocks(count, size, posClass, negClass) {
+                if (count > 0) {
+                    for (let i = 0; i < count; i++) {
+                        const block = document.createElement('div');
+                        block.className = 'block ' + posClass;
+                        block.style.width = (size * unitWidth) + 'px';
+                        block.style.marginLeft = ((currentPos - minVal) * unitWidth) + 'px';
+                        blocksEl.appendChild(block);
+                        currentPos += size;
+                    }
+                } else if (count < 0) {
+                    for (let i = 0; i < Math.abs(count); i++) {
+                        currentPos -= size;
+                        const block = document.createElement('div');
+                        block.className = 'block ' + negClass + ' neg';
+                        block.style.width = (size * unitWidth) + 'px';
+                        block.style.marginLeft = ((currentPos - minVal) * unitWidth) + 'px';
+                        blocksEl.appendChild(block);
+                    }
+                }
+            }
+
+            addBlocks(x, a, 'a', 'a');
+            addBlocks(y, b, 'b', 'b');
+
+            // n label
+            const nLabel = document.createElement('div');
+            nLabel.className = 'n-label';
+            nLabel.textContent = 'n = ' + n;
+            nLabel.style.left = ((n - minVal) * unitWidth) + 'px';
+            blocksEl.appendChild(nLabel);
+        }
+
+        render();
+    </script>
+
+</body>
+
+</html>

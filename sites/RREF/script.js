@@ -330,7 +330,7 @@ function printAction(action) {
     switch (action[0]) {
     case "switch":
         console.log(`Switch rows ${Ri} and ${Rj}`);
-        displayAction.innerText = `Switch rows ${Ri} and ${Rj}`;
+        // displayAction.innerText = `Switch rows ${Ri} and ${Rj}`;
         return 
         break;
     case "mult":

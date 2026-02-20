@@ -18,6 +18,7 @@ const rowj = document.getElementById("rowj");
 const calculateBtn = document.getElementById('calculateBtn');
 const addBtn = document.getElementById('addBtn');
 const addAnswer = document.getElementById('addAnswer');
+const displayAction = document.getElementById('displayAction');
 const matrixDOM = [[m11, m12, m13], [m21, m22, m23], [m31, m32, m33]];
 var actions = [];
 var matrices = [];

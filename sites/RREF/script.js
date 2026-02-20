@@ -18,7 +18,6 @@ const rowj = document.getElementById("rowj");
 const calculateBtn = document.getElementById('calculateBtn');
 const addBtn = document.getElementById('addBtn');
 const addAnswer = document.getElementById('addAnswer');
-const displayAction = document.getElementById('displayAction');
 const matrixDOM = [[m11, m12, m13], [m21, m22, m23], [m31, m32, m33]];
 var actions = [];
 var matrices = [];
@@ -27,12 +26,12 @@ var matrices = [];
 // const matrix = [[m11, m12, m13]]
 
 function toRational(numberString) {
-if (!numberString.includes('/')) {
-    return new Rational(numberString, 1)
-}
+    if (!numberString.includes('/')) {
+        return new Rational(numberString, 1)
+    }
 
-let numberList = numberString.split('/')
-return new Rational(numberList[0], numberList[1])
+    let numberList = numberString.split('/')
+    return new Rational(numberList[0], numberList[1])
 }
 
 class Rational {
@@ -41,7 +40,7 @@ class Rational {
         this.den = parseInt(b);
         //console.log(this)
     }
-    
+
     isInteger() {
         return this.den == 1;
     }
@@ -105,28 +104,28 @@ class Rational {
         this.num = 0;
         this.den = 1;
     }
-    
+
     add(y) {
         var newNum = this.num * y.den + this.den * y.num;
         var newDen = this.den * y.den;
         var n = reduce(newNum, newDen);
         return new Rational(n[0], n[1]);
     }
-    
+
     subtract(y) {
         var newNum = this.num * y.den - this.den * y.num;
         var newDen = this.den * y.den;
         var n = reduce(newNum, newDen);
         return new Rational(n[0], n[1]);
     }
-    
+
     multiply(y) {
         var newNum = this.num * y.num;
         var newDen = this.den * y.den;
         var n = reduce(newNum, newDen);
         return new Rational(n[0], n[1]);
     }
-    
+
     divide(y) {
         var newNum = this.num * y.den;
         var newDen = this.den * y.num;
@@ -172,8 +171,8 @@ function reduceRational(x) {
 
 class FractionOp {
 
-/*    constructor() {
-    }*/
+    /*    constructor() {
+        }*/
 
     reduced(x) {
         var a = x.num;
@@ -183,36 +182,36 @@ class FractionOp {
             c = a % b; a = b; b = c;
         }
         return new Rational(x.num / a, x.den / a)
-        }
-    
+    }
 
-    add(x,y) {
+
+    add(x, y) {
         var newNum = x.num * y.den + x.den * y.num;
         var newDen = x.den * y.den;
         var newRat = new Rational(newNum, newDen);
         return this.reduced(newRat);
     }
 
-    subtract(x,y) {
+    subtract(x, y) {
         var newNum = x.num * y.den - x.den * y.num;
         var newDen = x.den * y.den;
         var newRat = new Rational(newNum, newDen);
         return this.reduced(newRat);
     }
 
-    multiply(x,y) {
+    multiply(x, y) {
         var newNum = x.num * y.num;
         var newDen = x.den * y.den;
         var newRat = new Rational(newNum, newDen);
         return this.reduced(newRat);
     }
 
-    divide(x,y) {
+    divide(x, y) {
         var newNum = x.num * y.den;
         var newDen = x.den * y.num;
         var newRat = new Rational(newNum, newDen);
         return this.reduced(newRat);
-    }   
+    }
 }
 
 
@@ -224,7 +223,7 @@ function getDOMMatrix(rowCount, colCount) {
         matrix[i] = new Array(colCount);
         for (let j = 0; j < colCount; j++) {
             // Construct the id
-            let id = `input-${i+1}${j+1}`;
+            let id = `input-${i + 1}${j + 1}`;
             // Get the DOM element by id
             let element = document.getElementById(id);
             // Store the DOM element in the matrix
@@ -242,7 +241,7 @@ function storeMatrix(rowCount, colCount) {
         matrix[i] = new Array(colCount);
         for (let j = 0; j < colCount; j++) {
             // Construct the id
-            let id = `input-${i+1}${j+1}`;
+            let id = `input-${i + 1}${j + 1}`;
             // Get the DOM element by id
             let element = document.getElementById(id);
             // Store the DOM element in the matrix
@@ -260,7 +259,7 @@ function getMatrix(rowCount, colCount) {
         matrix[i] = new Array(colCount);
         for (let j = 0; j < colCount; j++) {
             // Construct the id
-            let id = `input-${i+1}${j+1}`;
+            let id = `input-${i + 1}${j + 1}`;
             // Get the DOM element by id
             let element = document.getElementById(id);
             // Store the DOM element in the matrix
@@ -279,7 +278,7 @@ function storeMatrix(A) {
     for (let i = 0; i < rowCount; i++) {
         for (let j = 0; j < colCount; j++) {
             // Construct the id
-            let id = `input-${i+1}${j+1}`;
+            let id = `input-${i + 1}${j + 1}`;
             // Get the DOM element by id
             let element = document.getElementById(id);
             // store entry in DOM element
@@ -289,36 +288,36 @@ function storeMatrix(A) {
 }
 
 function switchOperation(mat, i, j) {
-    let rowi = mat[parseInt(i)-1];
-    let rowj = mat[parseInt(j)-1];
+    let rowi = mat[parseInt(i) - 1];
+    let rowj = mat[parseInt(j) - 1];
 
 }
 
 
 function toggleInputs() {
-  let radio1 = document.getElementById('switch');
-  let radio2 = document.getElementById('mult');
-  let radio3 = document.getElementById('mult-add');
-  let input1 = document.getElementById('scalar');
-  let input2 = document.getElementById('rowi');
-  let input3 = document.getElementById('rowj');
+    let radio1 = document.getElementById('switch');
+    let radio2 = document.getElementById('mult');
+    let radio3 = document.getElementById('mult-add');
+    let input1 = document.getElementById('scalar');
+    let input2 = document.getElementById('rowi');
+    let input3 = document.getElementById('rowj');
 
-  // console.log(radio1.checked, radio2.checked, radio3.checked)
-  // console.log(input1.disabled, input2.disabled)
+    // console.log(radio1.checked, radio2.checked, radio3.checked)
+    // console.log(input1.disabled, input2.disabled)
 
-  if (radio1.checked) {
-    input1.disabled = true;
-    input2.disabled = false;
-    input3.disabled = false;
-  } else if (radio2.checked) {
-    input1.disabled = false;
-    input2.disabled = false;
-    input3.disabled = true;
-  } else {
-    input1.disabled = false;
-    input2.disabled = false;
-    input3.disabled = false;
-  }
+    if (radio1.checked) {
+        input1.disabled = true;
+        input2.disabled = false;
+        input3.disabled = false;
+    } else if (radio2.checked) {
+        input1.disabled = false;
+        input2.disabled = false;
+        input3.disabled = true;
+    } else {
+        input1.disabled = false;
+        input2.disabled = false;
+        input3.disabled = false;
+    }
 }
 
 
@@ -328,18 +327,17 @@ function printAction(action) {
     let Rj = action[3];
 
     switch (action[0]) {
-    case "switch":
-        console.log(`Switch rows ${Ri} and ${Rj}`);
-        // displayAction.innerText = `Switch rows ${Ri} and ${Rj}`;
-        return 
-        break;
-    case "mult":
-        console.log(`Multiply row ${alpha.display()}*${Ri}`);
-        break;
-    case "mult-add":
-        console.log(`Multiple row and add ${alpha.display()}*${Ri} + ${Rj} to ${Rj}`);
-        break;
-    default:
+        case "switch":
+            console.log(`Switch rows ${Ri} and ${Rj}`);
+            return
+            break;
+        case "mult":
+            console.log(`Multiply row ${alpha.display()}*${Ri}`);
+            break;
+        case "mult-add":
+            console.log(`Multiple row and add ${alpha.display()}*${Ri} + ${Rj} to ${Rj}`);
+            break;
+        default:
     }
 }
 
@@ -352,20 +350,20 @@ function undoAction(action) {
     matrix_iteration = matrix_iteration - 1;
 
     switch (action[0]) {
-    case "switch":
-        console.log(`Switch rows ${Ri} and ${Rj}`);
-        undoAct = ["switch", null, Rj, Ri];
-        return 
-        break;
-    case "mult":
-        console.log(`Multiply row 1/${alpha.display()}*${Ri}`);
-        undoAct = ["mult", F.divide(toRational("1"), alpha).display() , Ri, null];
-        break;
-    case "mult-add":
-        console.log(`Multiple row and add ${alpha.display()}*${Ri} + ${Rj} to ${Rj}`);
-        //undoAct = ["mult-add", F.divide(toRational("1"),alpha).display(), Ri, Rj];
-        break;
-    default:
+        case "switch":
+            console.log(`Switch rows ${Ri} and ${Rj}`);
+            undoAct = ["switch", null, Rj, Ri];
+            return
+            break;
+        case "mult":
+            console.log(`Multiply row 1/${alpha.display()}*${Ri}`);
+            undoAct = ["mult", F.divide(toRational("1"), alpha).display(), Ri, null];
+            break;
+        case "mult-add":
+            console.log(`Multiple row and add ${alpha.display()}*${Ri} + ${Rj} to ${Rj}`);
+            //undoAct = ["mult-add", F.divide(toRational("1"),alpha).display(), Ri, Rj];
+            break;
+        default:
     }
 }
 
@@ -381,9 +379,9 @@ var a32 = toRational(m32.value)
 var a33 = toRational(m33.value)
 var alpha = toRational(scalar.value)
 
-var row1 = [a11,a12,a13]
-var row2 = [a21,a22,a23]
-var row3 = [a31,a32,a33]
+var row1 = [a11, a12, a13]
+var row2 = [a21, a22, a23]
+var row3 = [a31, a32, a33]
 var matrix_iteration = 0
 
 var F = new FractionOp()
@@ -398,7 +396,7 @@ addBtn.addEventListener('click', (event) => {
     a11 = toRational(m11.value)
     a12 = toRational(m12.value)
     a13 = toRational(m13.value)
-    console.log(a11,a12,a13)
+    console.log(a11, a12, a13)
     addAnswer.value = F.add(F.add(a11, a12), a13).display()
     console.log(addAnswer.value)
 })
@@ -423,10 +421,10 @@ calculateBtn.addEventListener('click', (event) => {
     a33 = toRational(m33.value)
     alpha = toRational(scalar.value)
 
-    var row1 = [m11,m12,m13];
-    var row2 = [m21,m22,m23];
-    var row3 = [m31,m32,m33];
-    var matrix = [row1,row2,row3];
+    var row1 = [m11, m12, m13];
+    var row2 = [m21, m22, m23];
+    var row3 = [m31, m32, m33];
+    var matrix = [row1, row2, row3];
     var act = [];
 
     // var i = selectedRowi.value[selectedRowi.value.length-1]
@@ -437,104 +435,104 @@ calculateBtn.addEventListener('click', (event) => {
 
     if (selectedOption != null) {
         // console.log(selectedOption.value);
-        switch(selectedOption.value) {
-          case "switch":
-            var i = selectedRowi.value[selectedRowi.value.length-1]
-            var j = selectedRowj.value[selectedRowj.value.length-1]
-            act = ["switch", null, "R"+i, "R"+j];
-            actions.push(act);
-            printAction(act);
+        switch (selectedOption.value) {
+            case "switch":
+                var i = selectedRowi.value[selectedRowi.value.length - 1]
+                var j = selectedRowj.value[selectedRowj.value.length - 1]
+                act = ["switch", null, "R" + i, "R" + j];
+                actions.push(act);
+                printAction(act);
 
 
-            if (i+j == "12" || i+j == "21") {
-                var temp1 = m11.value
-                var temp2 = m12.value
-                var temp3 = m13.value
-                m11.value = m21.value
-                m12.value = m22.value
-                m13.value = m23.value
-                m21.value = temp1
-                m22.value = temp2
-                m23.value = temp3
+                if (i + j == "12" || i + j == "21") {
+                    var temp1 = m11.value
+                    var temp2 = m12.value
+                    var temp3 = m13.value
+                    m11.value = m21.value
+                    m12.value = m22.value
+                    m13.value = m23.value
+                    m21.value = temp1
+                    m22.value = temp2
+                    m23.value = temp3
 
-            } else if (i+j == "13" || i+j == "31") {
-                var temp1 = m11.value;
-                var temp2 = m12.value;
-                var temp3 = m13.value;
-                m11.value = m31.value;
-                m12.value = m32.value;
-                m13.value = m33.value;
-                m31.value = temp1;
-                m32.value = temp2;
-                m33.value = temp3;
+                } else if (i + j == "13" || i + j == "31") {
+                    var temp1 = m11.value;
+                    var temp2 = m12.value;
+                    var temp3 = m13.value;
+                    m11.value = m31.value;
+                    m12.value = m32.value;
+                    m13.value = m33.value;
+                    m31.value = temp1;
+                    m32.value = temp2;
+                    m33.value = temp3;
 
-            } else if (i+j == "23" || i+j == "23") {
-                var temp1 = m31.value;
-                var temp2 = m32.value;
-                var temp3 = m33.value;
-                m31.value = m21.value;
-                m32.value = m22.value;
-                m33.value = m23.value;
-                m21.value = temp1;
-                m22.value = temp2;
-                m23.value = temp3;
+                } else if (i + j == "23" || i + j == "23") {
+                    var temp1 = m31.value;
+                    var temp2 = m32.value;
+                    var temp3 = m33.value;
+                    m31.value = m21.value;
+                    m32.value = m22.value;
+                    m33.value = m23.value;
+                    m21.value = temp1;
+                    m22.value = temp2;
+                    m23.value = temp3;
 
-            }
-            matrix_iteration = matrix_iteration + 1;
+                }
+                matrix_iteration = matrix_iteration + 1;
 
-            break;
+                break;
 
-          case "mult":
-            switch(selectedRowi.value) {
-                case "rowi-1":
-                    m11.value = F.multiply(alpha,toRational(m11.value)).display()
-                    m12.value = F.multiply(alpha,toRational(m12.value)).display()
-                    m13.value = F.multiply(alpha,toRational(m13.value)).display()
-                    act = ["mult", alpha, "R1", null]
-                    actions.push(act);
-                    printAction(act);
-                    break;
-                case "rowi-2":
-                    m21.value = F.multiply(alpha,toRational(m21.value)).display()
-                    m22.value = F.multiply(alpha,toRational(m22.value)).display()
-                    m23.value = F.multiply(alpha,toRational(m23.value)).display()
-                    act = ["mult", alpha, "R2", null]
-                    actions.push(act);
-                    printAction(act);
-                    break;
-                case "rowi-3":
-                    m31.value = F.multiply(alpha,toRational(m31.value)).display()
-                    m32.value = F.multiply(alpha,toRational(m32.value)).display()
-                    m33.value = F.multiply(alpha,toRational(m33.value)).display()
-                    act = ["mult", alpha, "R3", null]
-                    actions.push(act);
-                    printAction(act);
-                    break;
-                default:
-            }
-            matrix_iteration = matrix_iteration + 1;
+            case "mult":
+                switch (selectedRowi.value) {
+                    case "rowi-1":
+                        m11.value = F.multiply(alpha, toRational(m11.value)).display()
+                        m12.value = F.multiply(alpha, toRational(m12.value)).display()
+                        m13.value = F.multiply(alpha, toRational(m13.value)).display()
+                        act = ["mult", alpha, "R1", null]
+                        actions.push(act);
+                        printAction(act);
+                        break;
+                    case "rowi-2":
+                        m21.value = F.multiply(alpha, toRational(m21.value)).display()
+                        m22.value = F.multiply(alpha, toRational(m22.value)).display()
+                        m23.value = F.multiply(alpha, toRational(m23.value)).display()
+                        act = ["mult", alpha, "R2", null]
+                        actions.push(act);
+                        printAction(act);
+                        break;
+                    case "rowi-3":
+                        m31.value = F.multiply(alpha, toRational(m31.value)).display()
+                        m32.value = F.multiply(alpha, toRational(m32.value)).display()
+                        m33.value = F.multiply(alpha, toRational(m33.value)).display()
+                        act = ["mult", alpha, "R3", null]
+                        actions.push(act);
+                        printAction(act);
+                        break;
+                    default:
+                }
+                matrix_iteration = matrix_iteration + 1;
 
-            break;
-             
-          case "mult-add":
-            var i = selectedRowi.value[selectedRowi.value.length-1]
-            var j = selectedRowj.value[selectedRowj.value.length-1]
+                break;
 
-            var Ri = matrix[i-1];
-            var Rj = matrix[j-1];
+            case "mult-add":
+                var i = selectedRowi.value[selectedRowi.value.length - 1]
+                var j = selectedRowj.value[selectedRowj.value.length - 1]
 
-            for (let n = 0; n < 3; n++) {
-                console.log(alpha,toRational(Ri[n].value),toRational(Rj[n].value));
-                Rj[n].value = F.add(F.multiply(alpha,toRational(Ri[n].value)),toRational(Rj[n].value)).display();
-            }
-            act = ["mult-add", alpha, "R"+i, "R"+j];
-            actions.push(act);
-            printAction(act);
-            matrix_iteration = matrix_iteration + 1;
+                var Ri = matrix[i - 1];
+                var Rj = matrix[j - 1];
+
+                for (let n = 0; n < 3; n++) {
+                    console.log(alpha, toRational(Ri[n].value), toRational(Rj[n].value));
+                    Rj[n].value = F.add(F.multiply(alpha, toRational(Ri[n].value)), toRational(Rj[n].value)).display();
+                }
+                act = ["mult-add", alpha, "R" + i, "R" + j];
+                actions.push(act);
+                printAction(act);
+                matrix_iteration = matrix_iteration + 1;
 
 
-            break;
-          default:
+                break;
+            default:
             // code block
         }
     }
@@ -568,4 +566,3 @@ calculateBtn.addEventListener('click', (event) => {
 //     multiplyAnswer.value = ''
 //     divideAnswer.value = ''
 // })
-

@@ -1,85 +1,90 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <!-- <script type="text/javascript"></script> -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>RREF</title>
-<style type="text/css">
-.grid-container {
-  display: inline-grid;
-  grid-template-columns: auto auto auto;
-  background-color: #2196F3;
-  padding: 5px;
-}
+  <!-- <script type="text/javascript"></script> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RREF</title>
+  <style type="text/css">
+    .grid-container {
+      display: inline-grid;
+      grid-template-columns: auto auto auto;
+      background-color: #2196F3;
+      padding: 5px;
+    }
 
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  padding: 10px;
-  font-size: 30px;
-  text-align: center;
-}
+    .grid-item {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(0, 0, 0, 0.8);
+      padding: 10px;
+      font-size: 30px;
+      text-align: center;
+    }
 
-fieldset {
-  display: inline-block;
-  border: 1px solid #000; /* Add a border to visualize the frame */
-}
+    fieldset {
+      display: inline-block;
+      border: 1px solid #000;
+      /* Add a border to visualize the frame */
+    }
 
-input { 
-  text-align: center; 
-}
+    input {
+      text-align: center;
+    }
 
-#grid {
-  display: grid;
-  gap: 3px;
-}
-
-</style>
+    #grid {
+      display: grid;
+      gap: 3px;
+    }
+  </style>
 </head>
 
 <body>
 
-    <h1>Matrix</h1>
+  <h1>Matrix</h1>
 
-    <div class="grid-container">
-        <div class="grid-item"><input id="input-11" style="height:90%; width:40%;" value="1" required /></div>
-        <div class="grid-item"><input id="input-12" style="height:90%; width:40%;" value="2" required /></div>
-        <div class="grid-item"><input id="input-13" style="height:90%; width:40%;" value="3" required /></div>
-        <div class="grid-item"><input id="input-21" style="height:90%; width:40%;" value="4" required /></div>
-        <div class="grid-item"><input id="input-22" style="height:90%; width:40%;" value="5" required /></div>
-        <div class="grid-item"><input id="input-23" style="height:90%; width:40%;" value="6" required /></div>
-        <div class="grid-item"><input id="input-31" style="height:90%; width:40%;" value="7" required /></div>
-        <div class="grid-item"><input id="input-32" style="height:90%; width:40%;" value="8" required /></div>
-        <div class="grid-item"><input id="input-33" style="height:90%; width:40%;" value="9" required /></div>
-<!--         <div class="grid-item">7</div>
+  <div class="grid-container">
+    <div class="grid-item"><input id="input-11" style="height:90%; width:40%;" value="1" required /></div>
+    <div class="grid-item"><input id="input-12" style="height:90%; width:40%;" value="2" required /></div>
+    <div class="grid-item"><input id="input-13" style="height:90%; width:40%;" value="3" required /></div>
+    <div class="grid-item"><input id="input-21" style="height:90%; width:40%;" value="4" required /></div>
+    <div class="grid-item"><input id="input-22" style="height:90%; width:40%;" value="5" required /></div>
+    <div class="grid-item"><input id="input-23" style="height:90%; width:40%;" value="6" required /></div>
+    <div class="grid-item"><input id="input-31" style="height:90%; width:40%;" value="7" required /></div>
+    <div class="grid-item"><input id="input-32" style="height:90%; width:40%;" value="8" required /></div>
+    <div class="grid-item"><input id="input-33" style="height:90%; width:40%;" value="9" required /></div>
+    <!--         <div class="grid-item">7</div>
         <div class="grid-item">8</div>
         <div class="grid-item">9</div> -->
-    </div>
+  </div>
 
-<!--     <div id="grid">
+  <!--     <div id="grid">
         <input id="input-11" value="0" />
         <input id="input-12" value="0" />
         
     </div> -->
 
-    <div><h2>Gaussian Elimination:</h2>
+  <div>
+    <h2>Gaussian Elimination:</h2>
 
 
 
     <fieldset>
-        <legend>Select a Row Operation:</legend>
-        <input type="radio" id="switch" name="row_op" value="switch" onchange="toggleInputs()"><label for="switch">Switch rows: Ri &harr; Rj</label><br>
-        <input type="radio" id="mult" name="row_op" value="mult" onchange="toggleInputs()"><label for="mult">Scalar Multiple: a*Ri</label><br>
-        <input type="radio" id="mult-add" name="row_op" value="mult-add" onchange="toggleInputs()"><label for="mult-add">Multiply row and add row: a*Ri + Rj &rarr; Rj</label><br>
+      <legend>Select a Row Operation:</legend>
+      <input type="radio" id="switch" name="row_op" value="switch" onchange="toggleInputs()"><label for="switch">Switch
+        rows: Ri &harr; Rj</label><br>
+      <input type="radio" id="mult" name="row_op" value="mult" onchange="toggleInputs()"><label for="mult">Scalar
+        Multiple: a*Ri</label><br>
+      <input type="radio" id="mult-add" name="row_op" value="mult-add" onchange="toggleInputs()"><label
+        for="mult-add">Multiply row and add row: a*Ri + Rj &rarr; Rj</label><br>
     </fieldset>
 
-    </div>
-    <br>
+  </div>
+  <br>
 
 
-    <label for="scalar">Choose a :</label> <input type="text" id="scalar" value = 1 style="width: 5em">
-    <br>
+  <label for="scalar">Choose a :</label> <input type="text" id="scalar" value=1 style="width: 5em">
+  <br>
   <label for="rowi">Choose Ri :</label>
   <select name="rowi" id="rowi">
     <option value="rowi-1">R1</option>
@@ -94,19 +99,17 @@ input {
     <option value="rowj-3">R3</option>
   </select>
 
-<br>
-<button id="calculateBtn">Calculate</button>
+  <br>
+  <button id="calculateBtn">Calculate</button>
 
-<br><br>
-<p id="displayAction"></p>
-<br><br>
-  <!-- <button id="addBtn">+</button> <input type="text" id="addAnswer" style="width: 7em"> -->
-
-  <p>To undo a switch, just switch again. To undo a scalar multiple, just multiply the same row by the reciprocal. To undo a scalar multiple plus row, just change the sign of the scalar number.</p>
+  <br><br><br><br><br>
+  <button id="addBtn">+</button> <input type="text" id="addAnswer" style="width: 7em">
 
 
 
 
-<script src="script.js"></script>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
